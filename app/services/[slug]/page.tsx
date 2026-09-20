@@ -11,7 +11,6 @@ import {
   resolveServiceSlug,
 } from "@/data/servicesData";
 
-import { validLocations, locationData } from "@/constants/locations";
 import { getCanonicalUrl } from "@/lib/canonical-url";
 
 import {
