@@ -1,0 +1,287 @@
+"use client";
+
+import Link from "next/link";
+import { Phone, Mail, Clock, ArrowRight, Shield } from "lucide-react";
+import { PRIMARY, SECONDARY } from "@/constants/contacts";
+import LocationServicesAccordion from "@/components/layout/LocationServicesAccordion";
+import OptimizedImage from "@/components/shared/OptimizedImage";
+import {
+  servicesData,
+  serviceCategories,
+  getServiceRoute,
+} from "@/data/servicesData";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+
+const Footer = () => {
+  return (
+    <footer
+      className="text-white relative"
+      style={{
+        background: "linear-gradient(180deg, #0F1729 0%, #070A10 100%)",
+        borderTop: "1px solid #1E2A42",
+      }}
+    >
+      {/* Main Footer Content */}
+      <div className="container mx-auto px-4 py-4 md:py-6 lg:py-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 items-start gap-8 lg:gap-10 xl:gap-12">
+          {/* Company Info */}
+          <div className="space-y-2 md:space-y-3">
+            <div className="space-y-4">
+              <div className="inline-flex items-center justify-center rounded-2xl bg-white/10 p-3 shadow-sm ring-1 ring-white/10 w-fit">
+                <OptimizedImage
+                  src="/logo.png"
+                  alt="Sweta Invisible Grill - Invisible Grills, Safety Nets and Pigeon Control Solutions"
+                  className="h-[4rem] w-auto object-contain"
+                />
+              </div>
+
+              <p
+                className="text-sm md:text-base leading-relaxed mt-0"
+                style={{ color: "#8FAAC8" }}
+              >
+                Sweta Invisible Grill provides professional invisible grills,
+                balcony safety nets, pigeon nets, children safety nets and
+                related safety solutions across Gurugram, Delhi NCR and Noida.
+                We focus on quality materials, careful installation and
+                reliable customer support.
+              </p>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <Shield className="h-4 w-4 text-safety" />
+              <span className="text-sm">
+                Quality Safety & Installation Services
+              </span>
+            </div>
+          </div>
+
+          {/* Services */}
+          <div className="space-y-4 md:space-y-6 w-full">
+            <h3
+              className="text-base md:text-lg font-semibold"
+              style={{ color: "#FF6B42" }}
+            >
+              Our Services
+            </h3>
+
+            <Accordion type="single" collapsible className="space-y-4">
+              {Object.entries(serviceCategories).map(
+                ([categoryKey, category]) => (
+                  <AccordionItem
+                    key={categoryKey}
+                    value={categoryKey}
+                    className="rounded-3xl border border-white/10 bg-slate-950/95 shadow-2xl overflow-hidden"
+                  >
+                    <AccordionTrigger className="flex items-center justify-between px-4 py-4 text-left">
+                      <span className="text-sm font-semibold text-white">
+                        {category.title}
+                      </span>
+                    </AccordionTrigger>
+
+                    <AccordionContent className="px-0">
+                      <div className="rounded-b-3xl bg-white/95 divide-y divide-slate-200/10">
+                        {category.services.map((serviceId) => {
+                          const service =
+                            servicesData[
+                              serviceId as keyof typeof servicesData
+                            ];
+
+                          return (
+                            <Link
+                              key={serviceId}
+                              href={getServiceRoute(serviceId)}
+                              className="flex items-center justify-between gap-3 px-4 py-3 transition-colors duration-150 bg-white hover:bg-slate-50"
+                            >
+                              <span className="text-sm font-semibold text-slate-950">
+                                {service?.title ?? serviceId}
+                              </span>
+
+                              <ArrowRight className="h-4 w-4 text-slate-950" />
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                )
+              )}
+            </Accordion>
+          </div>
+
+          {/* Service Areas */}
+          <div className="space-y-4 md:space-y-6 w-full">
+            <h3
+              className="text-base md:text-lg font-semibold"
+              style={{ color: "#FF6B42" }}
+            >
+              Service Areas
+            </h3>
+
+            <LocationServicesAccordion variant="footer" />
+          </div>
+
+          {/* Contact Info */}
+          <div className="space-y-4 md:space-y-6 w-full md:col-span-2 xl:col-span-1">
+            <h3
+              className="text-base md:text-lg font-semibold"
+              style={{ color: "#FF6B42" }}
+            >
+              Contact Info
+            </h3>
+
+            <div className="space-y-3 md:space-y-4">
+              {/* Primary Phone */}
+              <a
+                href={PRIMARY.tel}
+                className="flex items-start space-x-3 group min-h-0 transition-colors"
+                style={{ color: "#FF6B42" }}
+                rel="noopener"
+              >
+                <Phone className="h-4 w-4 mt-0.5 flex-shrink-0" />
+
+                <span
+                  className="text-sm md:text-base font-medium"
+                  aria-label="Primary Contact Number"
+                >
+                  {PRIMARY.display}
+                </span>
+              </a>
+
+              {/* Secondary Phone */}
+              <a
+                href={SECONDARY.tel}
+                className="flex items-start space-x-3 group min-h-0 transition-colors"
+                style={{ color: "#C8D8EE" }}
+                rel="noopener"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "#FF6B42";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "#C8D8EE";
+                }}
+              >
+                <Phone className="h-4 w-4 mt-0.5 flex-shrink-0" />
+
+                <span
+                  className="text-sm md:text-base font-medium"
+                  aria-label="Secondary Contact Number"
+                >
+                  {SECONDARY.display}
+                </span>
+              </a>
+
+              {/* Email */}
+              <div className="flex items-start space-x-3">
+                <Mail
+                  className="h-4 w-4 mt-0.5 flex-shrink-0"
+                  style={{ color: "#FF6B42" }}
+                />
+
+                <a
+                  href="mailto:invisiblesafetygrillpatna@gmail.com"
+                  className="text-sm md:text-base transition-colors min-h-0 relative group"
+                  rel="noopener"
+                  style={{ color: "#C8D8EE" }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "#FF6B42";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "#C8D8EE";
+                  }}
+                >
+                  invisiblesafetygrillpatna@gmail.com
+                </a>
+              </div>
+
+              {/* Address */}
+              <div className="flex items-start space-x-3">
+                <Shield
+                  className="h-4 w-4 mt-0.5 flex-shrink-0"
+                  style={{ color: "#FF6B42" }}
+                />
+
+                <address
+                  className="text-sm md:text-base not-italic leading-relaxed"
+                  style={{ color: "#C8D8EE" }}
+                >
+                  Rajeev Chowk, near Jain Complex,
+                  <br />
+                  Hans Enclave, Sector 33,
+                  <br />
+                  Gurugram, Haryana 122004, India
+                </address>
+              </div>
+
+              {/* Business Hours */}
+              <div className="flex items-start space-x-3">
+                <Clock
+                  className="h-4 w-4 mt-0.5 flex-shrink-0"
+                  style={{ color: "#FF6B42" }}
+                />
+
+                <div
+                  className="text-sm md:text-base"
+                  style={{ color: "#C8D8EE" }}
+                >
+                  <div>Mon - Sat: 8:00 AM - 8:00 PM</div>
+                  <div>Sun: 9:00 AM - 6:00 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Footer */}
+      <div style={{ borderTop: "1px solid #1E2A42" }}>
+        <div className="container mx-auto px-4 py-4 md:py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div
+              className="text-xs md:text-sm text-center md:text-left"
+              style={{ color: "#8FAAC8" }}
+            >
+              © 2026 Sweta Invisible Grill. All rights reserved.
+            </div>
+
+            <div className="flex flex-wrap justify-center md:justify-end gap-4 md:gap-6 text-xs md:text-sm">
+              <Link
+                href="/privacy-policy"
+                className="transition-colors min-h-0"
+                style={{ color: "#C8D8EE" }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "#F0F6FF";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "#C8D8EE";
+                }}
+              >
+                Privacy Policy
+              </Link>
+
+              <Link
+                href="/terms-of-service"
+                className="transition-colors min-h-0"
+                style={{ color: "#C8D8EE" }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "#F0F6FF";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "#C8D8EE";
+                }}
+              >
+                Terms of Service
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

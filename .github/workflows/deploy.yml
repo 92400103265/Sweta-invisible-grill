@@ -1,0 +1,152 @@
+name: Build and publish to deploy branch
+
+# The source code is stored on the master branch.
+# GitHub Actions builds the static Next.js export and publishes
+# the generated out/ directory to the deploy branch.
+# Hostinger should use the deploy branch.
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# Prevent multiple deployments from running at the same time.
+concurrency:
+  group: deploy-branch
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out source code
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          # Full Git history is required by the sitemap generation
+          # script to calculate accurate last-modified dates.
+          fetch-depth: 0
+
+      # 2. Install Node.js
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Build the static website
+      - name: Build static export
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
+        run: npm run build
+
+      # 5. Verify the generated static website
+      - name: Verify the export looks deployable
+        run: |
+          set -e
+
+          test -f out/index.html || {
+            echo "::error::out/index.html missing"
+            exit 1
+          }
+
+          test -f out/.htaccess || {
+            echo "::error::out/.htaccess missing"
+            exit 1
+          }
+
+          test -f out/robots.txt || {
+            echo "::error::out/robots.txt missing"
+            exit 1
+          }
+
+          test -f out/sitemap.xml || {
+            echo "::error::out/sitemap.xml missing"
+            exit 1
+          }
+
+          test -f out/404.html || {
+            echo "::error::out/404.html missing"
+            exit 1
+          }
+
+          echo "Export OK: $(find out -type f | wc -l) files, $(du -sh out | cut -f1)"
+
+      # 6. Publish the finished website to deploy branch
+      - name: Publish out/ to the deploy branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+
+          REMOTE="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+          rm -rf .deploy
+
+          # Reuse the existing deploy branch when available.
+          if git ls-remote --exit-code --heads "$REMOTE" deploy >/dev/null 2>&1; then
+            echo "deploy branch exists - cloning it"
+
+            git clone \
+              --single-branch \
+              --branch deploy \
+              "$REMOTE" \
+              .deploy
+          else
+            echo "deploy branch does not exist yet - creating it"
+
+            git clone --single-branch "$REMOTE" .deploy
+
+            git -C .deploy checkout --orphan deploy
+            git -C .deploy rm -rf --quiet . || true
+          fi
+
+          # Remove old website files while keeping .git.
+          find .deploy \
+            -mindepth 1 \
+            -maxdepth 1 \
+            -not -name .git \
+            -exec rm -rf {} +
+
+          # Copy the newly generated static website.
+          cp -a out/. .deploy/
+
+          # Hostinger expects package.json.
+          # This is only a small deployment stub because the deploy
+          # branch already contains the completed static website.
+          cat > .deploy/package.json <<'JSON'
+          {
+            "name": "sweta-invisible-grill-static",
+            "version": "1.0.0",
+            "private": true,
+            "description": "Prebuilt static export for Sweta Invisible Grill. Built by GitHub Actions from the master branch.",
+            "scripts": {
+              "build": "echo 'Prebuilt static export - nothing to build.'"
+            }
+          }
+          JSON
+
+          # Commit and push the deployment.
+          cd .deploy
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "Build output is identical to the current deploy branch - nothing to push."
+          else
+            git commit -m "Deploy ${GITHUB_SHA::7}"
+            git push "$REMOTE" deploy
+
+            echo "Pushed build ${GITHUB_SHA::7} to the deploy branch."
+          fi
