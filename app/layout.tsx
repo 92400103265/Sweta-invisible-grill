@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import MainLayout from "@/components/layout/MainLayout";
-import { PRIMARY } from "@/constants/contacts";
 import { validLocations, locationData } from "@/constants/locations";
 
-const SITE_URL = "https://invisiblegrillsandsafetynets.in";
+const SITE_URL = "https://www.invisiblesafetygrillpatna.com";
 
 const SITE_TITLE =
   "Sweta Invisible Grill – Invisible Grills & Safety Nets in Gurugram";
@@ -20,10 +21,10 @@ const BUSINESS_NAME = "Sweta Invisible Grill";
 const BUSINESS_PHONE = "+917065953252";
 const BUSINESS_EMAIL = "invisiblesafetygrillpatna@gmail.com";
 
-const BUSINESS_ADDRESS =
-  "Rajeev Chowk, near Jain Complex, Hans Enclave, Sector 33, Gurugram, Haryana 122004";
-
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 // Get current date for metadata
 const currentDate = new Date().toISOString();
@@ -126,11 +127,8 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-
     title: SITE_TITLE,
-
     description: SITE_DESCRIPTION,
-
     images: ["/images/hero-image.jpg"],
   },
 
@@ -146,7 +144,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const phoneNumber = BUSINESS_PHONE;
 
@@ -286,13 +284,12 @@ export default function RootLayout({
 
           contactType: "customer service",
 
-          areaServed: "Gurugram",
+          areaServed: ["Gurugram", "Delhi NCR", "Noida"],
 
           availableLanguage: ["English", "Hindi"],
         },
 
-        // Location pages remain connected to the existing location constants.
-        "department": validLocations.map((slug) => {
+        department: validLocations.map((slug) => {
           const loc = locationData[slug];
 
           return {
@@ -409,10 +406,7 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* =====================================================
-            GOOGLE ADS GOOGLE TAG
-            ===================================================== */}
-
+        {/* Google Ads Tag */}
         <Script
           id="google-ads-script"
           src="https://www.googletagmanager.com/gtag/js?id=AW-18388085912"
