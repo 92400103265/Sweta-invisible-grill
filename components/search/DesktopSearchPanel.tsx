@@ -46,14 +46,15 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
 
   const categories = [
     "invisible grills",
-    "balcony nets",
-    "pigeon control",
+    "balcony safety nets",
     "pigeon nets",
-    "cricket nets",
-    "sports nets",
-    "safety nets",
-    "industrial nets",
+    "bird protection nets",
+    "child safety nets",
+    "pet safety nets",
+    "window safety nets",
+    "terrace safety nets",
   ];
+
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
 
   // Focus management
@@ -75,7 +76,10 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
             currentCategory.substring(0, displayedPlaceholder.length + 1)
           );
         }, 50);
-      } else if (displayedPlaceholder.length === targetLength && isTyping) {
+      } else if (
+        displayedPlaceholder.length === targetLength &&
+        isTyping
+      ) {
         typingTimeoutRef.current = setTimeout(() => {
           setDisplayedPlaceholder("");
           setCurrentCategoryIndex(
@@ -133,13 +137,14 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
       normalizedQuery,
       location ?? undefined
     );
+
     if (specialResults.length > 0) {
       setResults(specialResults);
       setShowResults(true);
       return;
     }
 
-    // CASE 1: Location-only search (e.g., "hyderabad", "bangalore")
+    // CASE 1: Location-only search
     if (type === "location-only" && location) {
       const locationServices = getServicesByLocation(location).slice(0, 12);
       setResults(locationServices);
@@ -147,11 +152,10 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
       return;
     }
 
-    // CASE 2: Service + Location search (e.g., "safety nets bangalore")
+    // CASE 2: Service + Location search
     if (type === "service+location" && location) {
       const cleanQuery = removeLocationFromQuery(normalizedQuery).trim();
 
-      // First, try to find by category
       let resultsData: SearchDataItem[] = [];
 
       // Search for category matches in that location
@@ -180,8 +184,10 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
       return;
     }
 
-    // CASE 3: Service-only search (e.g., "invisible grills")
-    const cleanQuery = removeLocationFromQuery(normalizedQuery) || normalizedQuery;
+    // CASE 3: Service-only search
+    const cleanQuery =
+      removeLocationFromQuery(normalizedQuery) || normalizedQuery;
+
     const searchResults = fuseInstanceRef.current
       .search(cleanQuery)
       .slice(0, 12);
@@ -197,6 +203,7 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
     setQuery(value);
 
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+
     debounceTimerRef.current = setTimeout(() => {
       runSearch(value.trim());
     }, 200);
@@ -219,7 +226,6 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
 
   // Outside click handler (Desktop only)
   useEffect(() => {
-    // Only add listener on desktop (≥768px)
     const isDesktop = window.innerWidth >= 768;
     if (!isDesktop) return;
 
@@ -293,9 +299,16 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
               justifyContent: "space-between",
             }}
           >
-            <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#111827" }}>
-              Search
+            <h2
+              style={{
+                fontSize: "20px",
+                fontWeight: "600",
+                color: "#111827",
+              }}
+            >
+              Search Sweta Invisible Grill
             </h2>
+
             <button
               onClick={handleClose}
               style={{
@@ -308,8 +321,12 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
                 alignItems: "center",
                 justifyContent: "center",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#111827")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#6b7280")}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.color = "#111827")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color = "#6b7280")
+              }
               aria-label="Close search"
             >
               <X className="w-6 h-6" />
@@ -317,7 +334,12 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
           </div>
 
           {/* Search Input */}
-          <div style={{ padding: "24px", borderBottom: "1px solid #e5e7eb" }}>
+          <div
+            style={{
+              padding: "24px",
+              borderBottom: "1px solid #e5e7eb",
+            }}
+          >
             <div
               style={{
                 display: "flex",
@@ -329,16 +351,22 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
                 border: "1px solid #e5e7eb",
               }}
             >
-              <Search className="w-5 h-5" style={{ color: "#9ca3af" }} />
+              <Search
+                className="w-5 h-5"
+                style={{ color: "#9ca3af" }}
+              />
+
               <input
                 ref={searchInputRef}
                 type="text"
                 value={query}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
-                placeholder={displayedPlaceholder || "Search services..."}
+                placeholder={
+                  displayedPlaceholder || "Search invisible grills & safety nets..."
+                }
                 autoComplete="off"
-                aria-label="Search services"
+                aria-label="Search invisible grills and safety nets"
                 style={{
                   flex: 1,
                   backgroundColor: "transparent",
@@ -348,6 +376,7 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
                   border: "none",
                 }}
               />
+
               {query && (
                 <button
                   onClick={() => {
@@ -366,8 +395,12 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#111827")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "#9ca3af")}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#111827")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "#9ca3af")
+                  }
                   aria-label="Clear search"
                 >
                   <X className="w-5 h-5" />
@@ -386,24 +419,54 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
           >
             {showResults ? (
               results.length === 0 ? (
-                <div style={{ textAlign: "center", color: "#6b7280", paddingTop: "48px" }}>
+                <div
+                  style={{
+                    textAlign: "center",
+                    color: "#6b7280",
+                    paddingTop: "48px",
+                  }}
+                >
                   <Search
                     className="w-12 h-12 mx-auto mb-3"
                     style={{ opacity: 0.3, color: "#9ca3af" }}
                   />
-                  <p style={{ fontWeight: "500", color: "#111827" }}>
+
+                  <p
+                    style={{
+                      fontWeight: "500",
+                      color: "#111827",
+                    }}
+                  >
                     No services found.
                   </p>
-                  <p style={{ fontSize: "14px", marginTop: "4px" }}>
-                    Try "pigeon nets", "invisible grills bangalore", or a city name.
+
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      marginTop: "4px",
+                    }}
+                  >
+                    Try "invisible grills", "pigeon nets Gurugram", or "safety nets Noida".
                   </p>
                 </div>
               ) : (
-                <div role="listbox" aria-live="polite" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <div
+                  role="listbox"
+                  aria-live="polite"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "16px",
+                  }}
+                >
                   {results.map((item) => (
                     <Link
                       key={item.id}
-                      href={buildSearchResultUrl(item, queryType, detectedLocation || undefined)}
+                      href={buildSearchResultUrl(
+                        item,
+                        queryType,
+                        detectedLocation || undefined
+                      )}
                       onClick={handleClose}
                       role="option"
                       style={{
@@ -417,14 +480,21 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.backgroundColor = "#f3f4f6";
-                        e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.08)";
+                        e.currentTarget.style.boxShadow =
+                          "0 4px 12px rgba(0, 0, 0, 0.08)";
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.backgroundColor = "#f9fafb";
                         e.currentTarget.style.boxShadow = "none";
                       }}
                     >
-                      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "8px",
+                        }}
+                      >
                         <span
                           style={{
                             fontSize: "12px",
@@ -436,6 +506,7 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
                         >
                           {item.category}
                         </span>
+
                         <span
                           style={{
                             fontSize: "16px",
@@ -443,8 +514,13 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
                             color: "#111827",
                           }}
                         >
-                          {buildDisplayName(item, queryType, detectedLocation || undefined)}
+                          {buildDisplayName(
+                            item,
+                            queryType,
+                            detectedLocation || undefined
+                          )}
                         </span>
+
                         <span
                           style={{
                             fontSize: "14px",
@@ -457,22 +533,32 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
                         >
                           {item.description}
                         </span>
+
                         {queryType === "service-only" && (
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", marginTop: "8px" }}>
-                            {getStatesFromLocations(item.locations).map((state) => (
-                              <span
-                                key={state}
-                                style={{
-                                  fontSize: "12px",
-                                  backgroundColor: "#cffafe",
-                                  color: "#0369a1",
-                                  padding: "4px 8px",
-                                  borderRadius: "4px",
-                                }}
-                              >
-                                {state}
-                              </span>
-                            ))}
+                          <div
+                            style={{
+                              display: "flex",
+                              flexWrap: "wrap",
+                              gap: "4px",
+                              marginTop: "8px",
+                            }}
+                          >
+                            {getStatesFromLocations(item.locations).map(
+                              (state) => (
+                                <span
+                                  key={state}
+                                  style={{
+                                    fontSize: "12px",
+                                    backgroundColor: "#cffafe",
+                                    color: "#0369a1",
+                                    padding: "4px 8px",
+                                    borderRadius: "4px",
+                                  }}
+                                >
+                                  {state}
+                                </span>
+                              )
+                            )}
                           </div>
                         )}
                       </div>
@@ -481,16 +567,34 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
                 </div>
               )
             ) : (
-              <div style={{ textAlign: "center", color: "#6b7280", paddingTop: "48px" }}>
+              <div
+                style={{
+                  textAlign: "center",
+                  color: "#6b7280",
+                  paddingTop: "48px",
+                }}
+              >
                 <Search
                   className="w-12 h-12 mx-auto mb-3"
                   style={{ opacity: 0.3, color: "#9ca3af" }}
                 />
-                <p style={{ fontWeight: "500", color: "#111827" }}>
+
+                <p
+                  style={{
+                    fontWeight: "500",
+                    color: "#111827",
+                  }}
+                >
                   Find our services
                 </p>
-                <p style={{ fontSize: "14px", marginTop: "4px" }}>
-                  Search services, cities, or try "safety nets bangalore"
+
+                <p
+                  style={{
+                    fontSize: "14px",
+                    marginTop: "4px",
+                  }}
+                >
+                  Search invisible grills, safety nets, pigeon nets, or locations like Gurugram, Delhi NCR and Noida.
                 </p>
               </div>
             )}
@@ -505,7 +609,9 @@ const DesktopSearchPanel: React.FC<DesktopSearchPanelProps> = ({
               color: "#9ca3af",
             }}
           >
-            <p>Available in Bangalore, Hyderabad, Chennai & more</p>
+            <p>
+              Serving Gurugram, Delhi NCR &amp; Noida
+            </p>
           </div>
         </div>
       </div>

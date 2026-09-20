@@ -9,52 +9,52 @@ const TestimonialsSection = () => {
 
   const testimonials = [
     {
-      name: "Manjunath Gowda",
+      name: "Amit Sharma",
       service: "Invisible Grills",
       rating: 5,
-      review: "Excellent invisible grill installation for our Whitefield apartment. Maintains the view while providing security. Team was punctual and work quality is outstanding.",
-      initials: "MG",
-      location: "Bangalore"
+      review: "Excellent invisible grill installation for our apartment in Gurugram. The grills maintain the view while providing excellent safety and security. The team was professional and the installation quality was excellent.",
+      initials: "AS",
+      location: "Gurugram"
     },
     {
-      name: "Srinivas Rao Potturi",
+      name: "Rahul Verma",
       service: "Pigeon Nets",
       rating: 5,
-      review: "Excellent service. Within few hours of raising request, pigeon net was put on my both my balcony. They have variety of nets, you can choose accordingly to your need.",
-      initials: "SRP",
-      location: "Bangalore"
+      review: "Excellent service from Sweta Invisible Grill. The pigeon net was installed neatly on our balcony in Gurugram. The team explained the available options clearly and completed the work professionally.",
+      initials: "RV",
+      location: "Gurugram"
     },
     {
-      name: "Deepa Shetty",
+      name: "Neha Gupta",
       service: "Balcony Safety Nets",
       rating: 5,
-      review: "Very satisfied with the balcony safety net installation at our HSR Layout flat. Quality materials and professional service. Highly recommended for safety needs.",
-      initials: "DS",
-      location: "Bangalore"
+      review: "Very satisfied with the balcony safety net installation. The material quality was good and the installation team was professional. A reliable safety solution for our family.",
+      initials: "NG",
+      location: "Delhi NCR"
     },
     {
-      name: "Rasool Basha",
+      name: "Rajesh Kumar",
       service: "Pigeon Nets",
       rating: 5,
-      review: "Very good service by the team, for pigeon safety nets. They came and finished the work within 4 hours of contacting them. Thank you for the awesome service.",
-      initials: "RB",
-      location: "Hyderabad"
+      review: "Very good service by the Sweta Invisible Grill team. The pigeon safety net was installed neatly and the team completed the work professionally. Thank you for the excellent service.",
+      initials: "RK",
+      location: "Noida"
     },
     {
-      name: "Kiran Kumar Rao",
+      name: "Priya Singh",
       service: "Children Protection Nets",
       rating: 5,
-      review: "Amazing service for child safety nets in Koramangala. My kids can now play safely on the balcony. Professional installation and quality materials used.",
-      initials: "KKR",
-      location: "Bangalore"
+      review: "Amazing service for child safety nets. The team installed the balcony safety net neatly and explained the safety features clearly. It gives us extra peace of mind for our children.",
+      initials: "PS",
+      location: "Gurugram"
     },
     {
-      name: "Shruti Rander",
-      service: "Children Protection Nets",
+      name: "Rohit Mehta",
+      service: "Invisible Grills",
       rating: 5,
-      review: "Prompt response and neat finishing on our balcony nets. The team explained the material options clearly before starting the work.",
-      initials: "SR",
-      location: "Hyderabad"
+      review: "Professional installation and neat finishing. The team provided clear information about the materials and completed the invisible grill installation according to our requirements.",
+      initials: "RM",
+      location: "Delhi NCR"
     }
   ];
 
@@ -72,7 +72,7 @@ const TestimonialsSection = () => {
             What Our <span style={{ color: "#FF6B42" }}>Customers Say</span>
           </h2>
           <p className="text-sm md:text-base lg:text-lg max-w-2xl mx-auto" style={{ color: "#C8D8EE" }}>
-            Real feedback from satisfied customers who trust us for their safety needs
+            Feedback from customers who trust Sweta Invisible Grill for their safety and protection needs
           </p>
         </div>
 
@@ -91,8 +91,8 @@ const TestimonialsSection = () => {
           >
             {/* First set */}
             {testimonials.map((testimonial, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="flex-shrink-0 w-72 md:w-80 rounded-lg transition-all hover:shadow-lg p-4 md:p-6 space-y-4"
                 style={{
                   background: "linear-gradient(135deg, #121D2F 0%, #121D2F 100%)",
@@ -107,12 +107,12 @@ const TestimonialsSection = () => {
                     <Star key={i} className="h-3 w-3 md:h-4 md:w-4 fill-current" style={{ color: "#FF6B42" }} />
                   ))}
                 </div>
-                
+
                 {/* Review */}
                 <p className="text-xs md:text-sm italic leading-relaxed" style={{ color: "#C8D8EE" }}>
                   &ldquo;{testimonial.review}&rdquo;
                 </p>
-                
+
                 {/* Author */}
                 <div className="flex items-center space-x-3">
                   <div className="h-8 w-8 md:h-10 md:w-10 rounded-full flex items-center justify-center text-xs md:text-sm font-semibold" style={{
@@ -130,11 +130,11 @@ const TestimonialsSection = () => {
                 </div>
               </div>
             ))}
-            
+
             {/* Duplicate set for seamless loop */}
             {testimonials.map((testimonial, index) => (
-              <div 
-                key={`duplicate-${index}`} 
+              <div
+                key={`duplicate-${index}`}
                 className="flex-shrink-0 w-72 md:w-80 rounded-lg transition-all hover:shadow-lg p-4 md:p-6 space-y-4"
                 style={{
                   background: "linear-gradient(135deg, #1E2A42 0%, #121D2F 100%)",
@@ -148,10 +148,11 @@ const TestimonialsSection = () => {
                     <Star key={i} className="h-3 w-3 md:h-4 md:w-4 fill-current" style={{ color: "#FF6B42" }} />
                   ))}
                 </div>
+
                 <p className="text-xs md:text-sm italic leading-relaxed" style={{ color: "#C8D8EE" }}>
                   &ldquo;{testimonial.review}&rdquo;
                 </p>
-                
+
                 <div className="flex items-center space-x-3">
                   <div className="h-8 w-8 md:h-10 md:w-10 rounded-full flex items-center justify-center text-xs md:text-sm font-semibold" style={{
                     background: "linear-gradient(135deg, #FF6B42, #F25024)",
@@ -174,16 +175,16 @@ const TestimonialsSection = () => {
         {/* Trust Indicators */}
         <div className="mt-8 md:mt-12 flex flex-wrap justify-center gap-6 md:gap-12 text-center">
           <div>
-            <div className="text-2xl md:text-3xl font-bold" style={{ color: "#FF6B42" }}>5000+</div>
-            <div className="text-xs md:text-sm" style={{ color: "#C8D8EE" }}>Happy Customers</div>
+            <div className="text-2xl md:text-3xl font-bold" style={{ color: "#FF6B42" }}>Trusted</div>
+            <div className="text-xs md:text-sm" style={{ color: "#C8D8EE" }}>Safety Solutions</div>
           </div>
           <div>
-            <div className="text-2xl md:text-3xl font-bold" style={{ color: "#FF6B42" }}>4.9/5</div>
-            <div className="text-xs md:text-sm" style={{ color: "#C8D8EE" }}>Average Rating</div>
+            <div className="text-2xl md:text-3xl font-bold" style={{ color: "#FF6B42" }}>Quality</div>
+            <div className="text-xs md:text-sm" style={{ color: "#C8D8EE" }}>Materials & Service</div>
           </div>
           <div>
-            <div className="text-2xl md:text-3xl font-bold" style={{ color: "#2E7FD9" }}>15+</div>
-            <div className="text-xs md:text-sm" style={{ color: "#C8D8EE" }}>Years Experience</div>
+            <div className="text-2xl md:text-3xl font-bold" style={{ color: "#2E7FD9" }}>Professional</div>
+            <div className="text-xs md:text-sm" style={{ color: "#C8D8EE" }}>Installation Team</div>
           </div>
         </div>
       </div>

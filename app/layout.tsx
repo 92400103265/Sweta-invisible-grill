@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Inter } from "next/font/google";
 import Script from "next/script";
@@ -7,6 +7,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import MainLayout from "@/components/layout/MainLayout";
+import WhatsAppPopup from "@/components/WhatsAppPopup";
 import { validLocations, locationData } from "@/constants/locations";
 
 const SITE_URL = "https://www.invisiblesafetygrillpatna.com";
@@ -442,6 +443,9 @@ export default function RootLayout({
           <MainLayout>
             {children}
           </MainLayout>
+
+          {/* WhatsApp Floating Button + 2 Second Popup */}
+          <WhatsAppPopup />
 
           <Toaster />
         </TooltipProvider>

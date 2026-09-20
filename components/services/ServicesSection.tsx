@@ -27,8 +27,8 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
   const getServicesForCategory = (categoryKey: string) => {
     const category = serviceCategoriesWithoutClothHangers[categoryKey as keyof typeof serviceCategoriesWithoutClothHangers];
     if (!category) return [];
-    
-    return category.services.map(serviceId => 
+
+    return category.services.map(serviceId =>
       servicesData[serviceId as keyof typeof servicesData]
     ).filter(Boolean);
   };
@@ -51,7 +51,7 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
       ...prev,
       [category]: page
     }));
-    
+
     // Smooth scroll to services grid
     const element = document.getElementById('services-grid');
     if (element) {
@@ -67,13 +67,15 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
     }}>
       <div className="container mx-auto px-4">
         {showBreadcrumbs && <Breadcrumbs items={[{ label: 'Services' }]} darkMode={true} />}
+
         {/* Header */}
         <div className="text-center space-y-4 mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold" style={{ color: "#F0F6FF" }}>
             Our <span style={{ color: "#FF6B42" }}>Safety Solutions</span>
           </h2>
+
           <p className="text-sm md:text-base lg:text-xl max-w-2xl mx-auto" style={{ color: "#C8D8EE" }}>
-            Comprehensive range of safety nets and protection systems for homes, offices, and commercial spaces
+            Professional invisible grills, safety nets and protection solutions for homes, apartments, offices and commercial spaces across Gurugram, Delhi NCR and Noida
           </p>
         </div>
 
@@ -81,13 +83,13 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
           <div className="flex justify-center">
             <span className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-white/5 backdrop-blur-sm text-white text-sm md:text-base font-semibold shadow-sm ring-1 ring-white/10 border border-white/10">
               <Pointer className="h-4 w-4 md:h-5 md:w-5 transform rotate-180" />
-              Choose Your Service Category
+              Choose Your Safety Service
             </span>
           </div>
         </div>
 
-        <Tabs 
-          value={activeCategory} 
+        <Tabs
+          value={activeCategory}
           onValueChange={(value) => {
             setActiveCategory(value);
             setCurrentPages(prev => ({ ...prev, [value]: 1 }));
@@ -97,7 +99,7 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
           {/* Category Tabs */}
           <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-2 sm:grid-cols-4 mb-6 md:mb-8 h-auto p-1 gap-1" style={{ backgroundColor: "transparent" }}>
             {Object.entries(serviceCategoriesWithoutClothHangers).map(([key, category]) => (
-              <TabsTrigger 
+              <TabsTrigger
                 key={key}
                 value={key}
                 className="flex flex-col p-2 md:p-4 h-auto text-center min-h-[50px] md:min-h-[80px] text-xs md:text-sm rounded-b transition-smooth border"
@@ -134,6 +136,7 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
                     category.title
                   )}
                 </span>
+
                 <span className="text-xs opacity-75 mt-1 hidden sm:block">
                   {getServicesForCategory(key).length} services
                 </span>
@@ -144,9 +147,13 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
           {/* Tab Content */}
           {Object.entries(serviceCategoriesWithoutClothHangers).map(([key, category]) => (
             <TabsContent key={key} value={key} className="space-y-6 md:space-y-8">
+
               {/* Category Description */}
               <div className="text-center space-y-2">
-                <h3 className="text-xl md:text-2xl font-bold" style={{ color: "#FF6B42" }}>{category.title}</h3>
+                <h3 className="text-xl md:text-2xl font-bold" style={{ color: "#FF6B42" }}>
+                  {category.title}
+                </h3>
+
                 <p className="text-sm md:text-base max-w-2xl mx-auto" style={{ color: "#C8D8EE" }}>
                   {category.description}
                 </p>
@@ -174,21 +181,31 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
                     }}
                   >
                     <div className="relative h-48 w-full overflow-hidden">
-                      <OptimizedImage src={service.image} alt={`${service.title} installation by KGR Enterprises for balcony, window and child safety in Bangalore, Hyderabad, Chennai and Vijayawada`} className="{service.id === 'cloth-drying' ? '' : 'object-cover'} group-hover:scale-110 transition-transform duration-500 w-full h-full absolute inset-0" />
+                      <OptimizedImage
+                        src={service.image}
+                        alt={`${service.title} installation by Sweta Invisible Grill for balcony, window and child safety in Gurugram, Delhi NCR and Noida`}
+                        className="{service.id === 'cloth-drying' ? '' : 'object-cover'} group-hover:scale-110 transition-transform duration-500 w-full h-full absolute inset-0"
+                      />
+
                       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                      <div className="absolute top-3 left-3 px-2 md:px-3 py-1 md:py-1.5 rounded-full text-xs md:text-sm font-semibold" style={{
-                        color: "#F0F6FF",
-                        backgroundColor: "#034d5c",
-                        border: "1px solid #034d5c"
-                      }}>
+
+                      <div
+                        className="absolute top-3 left-3 px-2 md:px-3 py-1 md:py-1.5 rounded-full text-xs md:text-sm font-semibold"
+                        style={{
+                          color: "#F0F6FF",
+                          backgroundColor: "#034d5c",
+                          border: "1px solid #034d5c"
+                        }}
+                      >
                         {service.id === 'cloth-drying' ? 'Cloth Hangers' : category.title}
                       </div>
                     </div>
+
                     <div className="p-4 md:p-6 space-y-4">
                       <h4 className="text-lg md:text-xl font-bold leading-tight" style={{ color: "#F0F6FF" }}>
                         {service.title}
                       </h4>
-                      
+
                       <p className="text-xs md:text-sm line-clamp-3" style={{ color: "#C8D8EE" }}>
                         {service.description}
                       </p>
@@ -203,12 +220,11 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
                         ))}
                       </div>
 
-
                       {/* Link */}
-                <span className="inline-flex items-center gap-1 text-sm font-medium text-accent transition-colors group-hover:text-accent mt-auto">
-                  {`Explore ${service.title}`}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </span>
+                      <span className="inline-flex items-center gap-1 text-sm font-medium text-accent transition-colors group-hover:text-accent mt-auto">
+                        {`Explore ${service.title}`}
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </span>
                     </div>
                   </Link>
                 ))}
@@ -238,7 +254,7 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
                     <ChevronLeft className="h-3 w-3 md:h-4 md:w-4" />
                     <span className="hidden sm:inline">Previous</span>
                   </button>
-                  
+
                   <div className="flex items-center gap-1 md:gap-2">
                     {Array.from({ length: getTotalPages(key) }, (_, i) => i + 1).map((page) => (
                       <button
@@ -265,7 +281,7 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
                       </button>
                     ))}
                   </div>
-                  
+
                   <button
                     onClick={() => handlePageChange(key, Math.min(getTotalPages(key), currentPages[key] + 1))}
                     disabled={currentPages[key] === getTotalPages(key)}
@@ -295,18 +311,25 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
 
         {/* CTA Section */}
         <div className="text-center mt-12 md:mt-16">
-          <div className="max-w-2xl mx-auto rounded-lg transition-all duration-300 p-6 md:p-8 space-y-4" style={{
-            background: "linear-gradient(135deg, #1E2A42 0%, #121D2F 100%)",
-            border: "1px solid rgba(75, 159, 255, 0.2)",
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)"
-          }}>
-            <h3 className="text-xl md:text-2xl font-bold" style={{ color: "#F0F6FF" }}>Need Custom Safety Solution?</h3>
+          <div
+            className="max-w-2xl mx-auto rounded-lg transition-all duration-300 p-6 md:p-8 space-y-4"
+            style={{
+              background: "linear-gradient(135deg, #1E2A42 0%, #121D2F 100%)",
+              border: "1px solid rgba(75, 159, 255, 0.2)",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)"
+            }}
+          >
+            <h3 className="text-xl md:text-2xl font-bold" style={{ color: "#F0F6FF" }}>
+              Need a Custom Safety Solution?
+            </h3>
+
             <p className="text-sm md:text-base" style={{ color: "#C8D8EE" }}>
-              Our experts provide personalized safety net solutions tailored to your specific requirements
+              Sweta Invisible Grill provides personalized invisible grill and safety net solutions tailored to your home, balcony, window or commercial space requirements.
             </p>
+
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
-              <button 
-                className=" md:px-6 md:py-3 rounded-lg text-base font-semibold transition-all duration-200 gap-2 flex items-center justify-center"
+              <button
+                className="md:px-6 md:py-3 rounded-lg text-base font-semibold transition-all duration-200 gap-2 flex items-center justify-center"
                 style={{
                   background: "linear-gradient(135deg, #FF6B42 0%, #F25024 100%)",
                   color: "#ffffff",
@@ -315,10 +338,11 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
               >
                 <a href={PRIMARY.tel} className="flex items-center gap-2">
                   <Phone className="h-4 w-4 md:h-5 md:w-5" />
-                  Free Site Visit
+                  Free Site Inspection
                 </a>
               </button>
-              <button 
+
+              <button
                 className="md:px-6 md:py-3 flex justify-center rounded-lg text-base font-semibold transition-all duration-200"
                 style={{
                   backgroundColor: "transparent",
@@ -326,7 +350,6 @@ const ServicesSection = ({ showBreadcrumbs = false }: ServicesSectionProps) => {
                   border: "1px solid rgba(255, 107, 66, 0.5)",
                   boxShadow: "0 0 0 transparent"
                 }}
-                
               >
                 <Link href="/services" className="flex items-center gap-2">
                   Explore All Safety Solutions
