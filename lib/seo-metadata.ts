@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { PRIMARY } from '@/constants/contacts';
-import { locationData, validLocations, PRIMARY_LOCATION, LOCATION_NAMES } from '@/constants/locations';
+import { locationData, validLocations, PRIMARY_LOCATION } from '@/constants/locations';
 
 // Primary service locations, derived from the single source of truth in
 // constants/locations.ts so addresses/coordinates stay identical everywhere
