@@ -1,12 +1,20 @@
-import type { Metadata } from 'next';
-import { PRIMARY } from '@/constants/contacts';
-import { locationData, validLocations, PRIMARY_LOCATION } from '@/constants/locations';
+ import type { Metadata } from "next";
+
+import { PRIMARY } from "@/constants/contacts";
+
+import {
+  locationData,
+  validLocations,
+  PRIMARY_LOCATION,
+} from "@/constants/locations";
 
 // Primary service locations, derived from the single source of truth in
 // constants/locations.ts so addresses/coordinates stay identical everywhere
 // they are emitted (metadata, JSON-LD, sitemaps).
-export const PRIMARY_LOCATIONS = validLocations.map(slug => {
+
+export const PRIMARY_LOCATIONS = validLocations.map((slug) => {
   const loc = locationData[slug];
+
   return {
     name: loc.name as string,
     state: loc.state as string,
@@ -19,9 +27,10 @@ export const PRIMARY_LOCATIONS = validLocations.map(slug => {
   };
 });
 
-
 // "Gurugram, Delhi NCR and Noida"
-export const LOCATIONS_SENTENCE = 'Gurugram, Delhi NCR and Noida';
+export const LOCATIONS_SENTENCE = "Gurugram, Delhi NCR and Noida";
+
+// Generate a focused keyword set for a service.
 
 // Generate a focused keyword set for a service.
 //
