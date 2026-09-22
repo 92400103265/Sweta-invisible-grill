@@ -381,36 +381,37 @@ export default function RootLayout({
           }}
         />
 
-        {/* Google Analytics 4 */}
+        {/* =====================================================
+            GOOGLE ANALYTICS 4
+            ===================================================== */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-339PTXCP6X"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
 
         <Script
           id="google-analytics"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         >
           {`
             window.dataLayer = window.dataLayer || [];
 
-            function gtag(){
-              dataLayer.push(arguments);
+            function gtag() {
+              window.dataLayer.push(arguments);
             }
 
-            gtag('js', new Date());
+            gtag("js", new Date());
 
-            gtag('config', 'G-339PTXCP6X', {
-              'send_page_view': false,
-              'cookie_flags': 'max-age=7200;secure;samesite=none'
-            });
+            gtag("config", "G-339PTXCP6X");
           `}
         </Script>
 
-        {/* Google Ads Tag */}
+        {/* =====================================================
+            GOOGLE ADS
+            ===================================================== */}
         <Script
           id="google-ads-script"
-          src="https://www.googletagmanager.com/gtag/js?id=AW-18388085912"
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18468350920"
           strategy="afterInteractive"
         />
 
@@ -427,7 +428,7 @@ export default function RootLayout({
 
             gtag("js", new Date());
 
-            gtag("config", "AW-18388085912");
+            gtag("config", "AW-18468350920");
           `}
         </Script>
 
