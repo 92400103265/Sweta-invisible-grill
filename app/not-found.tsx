@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "404: Page Not Found - Sweta Invisible Grill",
@@ -14,33 +13,41 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <div className="min-h-[60vh] flex items-center justify-center px-4">
-      <div className="text-center space-y-6">
-        <h1 className="text-4xl md:text-6xl font-bold">404</h1>
+    <main className="min-h-[60vh] flex items-center justify-center px-4 py-16">
+      <div className="w-full max-w-2xl text-center">
+        {/* 404 */}
+        <h1 className="text-6xl md:text-8xl font-bold tracking-tight">
+          404
+        </h1>
 
-        <h2 className="text-2xl md:text-3xl font-semibold">
+        {/* Heading */}
+        <h2 className="mt-4 text-2xl md:text-3xl font-semibold">
           Page Not Found
         </h2>
 
-        <p className="text-muted-foreground max-w-md mx-auto">
+        {/* Description */}
+        <p className="mx-auto mt-4 max-w-md text-muted-foreground">
           The page you are looking for might have been removed, had its name
           changed, or is temporarily unavailable.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button asChild>
-            <Link href="/">
-              Return Home
-            </Link>
-          </Button>
+        {/* Buttons */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Return Home
+          </Link>
 
-          <Button variant="outline" asChild>
-            <Link href="/services">
-              Explore Invisible Grills &amp; Safety Nets
-            </Link>
-          </Button>
+          <Link
+            href="/services"
+            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-6 py-3 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            Explore Invisible Grills
+          </Link>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
