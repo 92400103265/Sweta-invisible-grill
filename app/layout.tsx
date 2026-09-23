@@ -2,7 +2,15 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+
 import "./globals.css";
+
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import MainLayout from "@/components/layout/MainLayout";
+import WhatsAppPopup from "@/components/WhatsAppPopup";
+
+import { validLocations, locationData } from "@/constants/locations";
 
 const SITE_URL = "https://www.invisiblesafetygrillpatna.com";
 
@@ -15,6 +23,9 @@ const SITE_DESCRIPTION =
 const BUSINESS_NAME = "Sweta Invisible Grill";
 const BUSINESS_PHONE = "+917065953252";
 const BUSINESS_EMAIL = "invisiblesafetygrillpatna@gmail.com";
+
+const GOOGLE_ADS_ID = "AW-18468350920";
+const GOOGLE_ANALYTICS_ID = "G-339PTXCP6X";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -73,6 +84,7 @@ export const metadata: Metadata = {
     "bird nets",
     "pigeon protection nets",
     "balcony safety nets",
+    "marine grade stainless steel grills",
 
     "invisible grill installation",
     "pigeon net installation",
@@ -138,13 +150,163 @@ export default function RootLayout({
 }: {
   children: ReactNode;
 }) {
+  const phoneNumber = BUSINESS_PHONE;
+
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${SITE_URL}/`,
+        url: `${SITE_URL}/`,
+        name: SITE_TITLE,
+
+        isPartOf: {
+          "@id": `${SITE_URL}/#website`,
+        },
+
+        primaryImageOfPage: {
+          "@id": `${SITE_URL}/#primaryimage`,
+        },
+
+        image: {
+          "@id": `${SITE_URL}/#primaryimage`,
+        },
+
+        thumbnailUrl: `${SITE_URL}/logo.png`,
+
+        datePublished: "2008-01-01T00:00:00+00:00",
+
+        dateModified: currentDate,
+
+        description: SITE_DESCRIPTION,
+
+        inLanguage: "en-IN",
+
+        potentialAction: [
+          {
+            "@type": "ReadAction",
+            target: [`${SITE_URL}/`],
+          },
+        ],
+      },
+
+      {
+        "@type": "ImageObject",
+        inLanguage: "en-IN",
+        "@id": `${SITE_URL}/#primaryimage`,
+        url: `${SITE_URL}/logo.png`,
+        contentUrl: `${SITE_URL}/logo.png`,
+        width: 150,
+        height: 150,
+        caption: `${BUSINESS_NAME} Logo`,
+      },
+
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        url: `${SITE_URL}/`,
+        name: BUSINESS_NAME,
+        description: SITE_DESCRIPTION,
+
+        publisher: {
+          "@id": `${SITE_URL}/#organization`,
+        },
+
+        inLanguage: "en-IN",
+      },
+
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
+        name: BUSINESS_NAME,
+        url: SITE_URL,
+
+        logo: {
+          "@type": "ImageObject",
+          "@id": `${SITE_URL}/#logo`,
+          url: `${SITE_URL}/logo.png`,
+          contentUrl: `${SITE_URL}/logo.png`,
+          width: 150,
+          height: 150,
+          caption: `${BUSINESS_NAME} Logo`,
+        },
+
+        image: {
+          "@id": `${SITE_URL}/#logo`,
+        },
+
+        email: BUSINESS_EMAIL,
+        telephone: phoneNumber,
+
+        address: {
+          "@type": "PostalAddress",
+          streetAddress:
+            "Rajeev Chowk, near Jain Complex, Hans Enclave, Sector 33",
+          addressLocality: "Gurugram",
+          addressRegion: "Haryana",
+          postalCode: "122004",
+          addressCountry: "IN",
+        },
+
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone: phoneNumber,
+          email: BUSINESS_EMAIL,
+          contactType: "customer service",
+          areaServed: ["Gurugram", "Delhi NCR", "Noida"],
+          availableLanguage: ["English", "Hindi"],
+        },
+
+        department: validLocations.map((slug) => {
+          const loc = locationData[slug];
+
+          return {
+            "@type": "LocalBusiness",
+            "@id": `${SITE_URL}/locations/${slug}/#localbusiness`,
+            name: `Invisible Grills & Safety Nets in ${loc.name}`,
+            image: `${SITE_URL}/images/hero-image.jpg`,
+
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: loc.streetAddress,
+              addressLocality: loc.name,
+              addressRegion: loc.state,
+              postalCode: loc.postalCode,
+              addressCountry: "IN",
+            },
+
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: loc.latitude.toString(),
+              longitude: loc.longitude.toString(),
+            },
+
+            areaServed: loc.name,
+            priceRange: "₹₹",
+            telephone: phoneNumber,
+            url: `${SITE_URL}/locations/${slug}/`,
+          };
+        }),
+      },
+    ],
+  };
+
   return (
     <html lang="en-IN">
       <head>
-        {/* Favicon */}
-        <link rel="icon" href="/favicon.png" type="image/png" />
+        {/* =====================================================
+            FAVICON
+            ===================================================== */}
+        <link
+          rel="icon"
+          href="/favicon.png"
+          type="image/png"
+        />
 
-        {/* Google Fonts */}
+        {/* =====================================================
+            RESOURCE HINTS
+            ===================================================== */}
         <link
           rel="preconnect"
           href="https://fonts.googleapis.com"
@@ -156,7 +318,9 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
 
-        {/* Google Tag Manager / Analytics DNS */}
+        {/* =====================================================
+            DNS PREFETCH
+            ===================================================== */}
         <link
           rel="dns-prefetch"
           href="https://www.googletagmanager.com"
@@ -167,7 +331,9 @@ export default function RootLayout({
           href="https://www.google-analytics.com"
         />
 
-        {/* Preload Hero Image */}
+        {/* =====================================================
+            PRELOAD HERO IMAGE
+            ===================================================== */}
         <link
           rel="preload"
           as="image"
@@ -175,36 +341,29 @@ export default function RootLayout({
           fetchPriority="high"
         />
 
-        {/* Organization Schema */}
+        {/* =====================================================
+            ORGANIZATION / WEBSITE SCHEMA
+            ===================================================== */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: BUSINESS_NAME,
-              url: SITE_URL,
-              logo: `${SITE_URL}/logo.png`,
-              email: BUSINESS_EMAIL,
-              telephone: BUSINESS_PHONE,
-              areaServed: [
-                "Gurugram",
-                "Delhi NCR",
-                "Noida",
-              ],
-            }),
+            __html: JSON.stringify(schemaData),
           }}
         />
 
-        {/* Google Analytics 4 */}
+        {/* =====================================================
+            GOOGLE TAG
+            ONE gtag.js FOR GOOGLE ADS + GOOGLE ANALYTICS
+            ===================================================== */}
+
         <Script
-          id="google-analytics-script"
-          src="https://www.googletagmanager.com/gtag/js?id=G-339PTXCP6X"
+          id="google-tag"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
           strategy="afterInteractive"
         />
 
         <Script
-          id="google-analytics-config"
+          id="google-tag-config"
           strategy="afterInteractive"
         >
           {`
@@ -215,42 +374,36 @@ export default function RootLayout({
             }
 
             gtag("js", new Date());
-            gtag("config", "G-339PTXCP6X");
+
+            // Google Ads
+            gtag("config", "${GOOGLE_ADS_ID}");
+
+            // Google Analytics 4
+            gtag("config", "${GOOGLE_ANALYTICS_ID}");
           `}
         </Script>
 
-        {/* Google Ads */}
+        {/* =====================================================
+            FUSE.JS
+            ===================================================== */}
         <Script
-          id="google-ads-script"
-          src="https://www.googletagmanager.com/gtag/js?id=AW-18468350920"
-          strategy="afterInteractive"
-        />
-
-        <Script
-          id="google-ads-config"
-          strategy="afterInteractive"
-        >
-          {`
-            window.dataLayer = window.dataLayer || [];
-
-            function gtag() {
-              window.dataLayer.push(arguments);
-            }
-
-            gtag("js", new Date());
-            gtag("config", "AW-18468350920");
-          `}
-        </Script>
-
-        {/* Fuse.js */}
-        <Script
+          id="fuse-js"
           src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"
           strategy="beforeInteractive"
         />
       </head>
 
       <body className={inter.className}>
-        {children}
+        <TooltipProvider>
+          <MainLayout>
+            {children}
+          </MainLayout>
+
+          {/* WhatsApp Floating Button + 2 Second Popup */}
+          <WhatsAppPopup />
+
+          <Toaster />
+        </TooltipProvider>
       </body>
     </html>
   );
