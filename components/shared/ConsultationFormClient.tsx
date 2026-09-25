@@ -1,6 +1,6 @@
-"use client";
+ "use client";
 
-import ConsultationForm from './ConsultationForm';
+import ConsultationForm from "./ConsultationForm";
 
 interface Props {
   onSubmit?: () => void;
