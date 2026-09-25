@@ -58,9 +58,9 @@ const WhatsAppPopup = () => {
           className={`
             fixed
             right-4
-            bottom-24
+            bottom-22
             sm:right-6
-            sm:bottom-28
+            sm:bottom-22
             md:right-8
             md:bottom-8
             z-[9999]
@@ -238,11 +238,11 @@ const WhatsAppPopup = () => {
           right-5
 
           /* MOBILE - move above bottom navigation */
-          bottom-24
+          bottom-22
 
           /* SMALL TABLETS */
           sm:right-6
-          sm:bottom-24
+          sm:bottom-22
 
           /* DESKTOP */
           md:right-7
