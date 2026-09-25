@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import React, { useEffect, useState } from "react";
 import { WhatsAppIcon } from "@/components/shared/Icons";
@@ -58,9 +58,9 @@ const WhatsAppPopup = () => {
           className={`
             fixed
             right-4
-            bottom-22
+            bottom-24
             sm:right-6
-            sm:bottom-22
+            sm:bottom-28
             md:right-8
             md:bottom-8
             z-[9999]
@@ -238,11 +238,11 @@ const WhatsAppPopup = () => {
           right-5
 
           /* MOBILE - move above bottom navigation */
-          bottom-22
+          bottom-24
 
           /* SMALL TABLETS */
           sm:right-6
-          sm:bottom-22
+          sm:bottom-24
 
           /* DESKTOP */
           md:right-7
