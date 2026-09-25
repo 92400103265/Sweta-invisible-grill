@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import React, { useEffect, useState } from "react";
 import { WhatsAppIcon } from "@/components/shared/Icons";
@@ -23,7 +23,6 @@ const WhatsAppPopup = () => {
     }, 2000);
 
     // Start closing after 4 seconds
-    // Popup stays visible for 2 seconds
     const hideTimer = window.setTimeout(() => {
       setIsClosing(true);
 
@@ -237,11 +236,18 @@ const WhatsAppPopup = () => {
         className="
           fixed
           right-5
-          bottom-5
+
+          /* MOBILE - move above bottom navigation */
+          bottom-24
+
+          /* SMALL TABLETS */
           sm:right-6
-          sm:bottom-6
+          sm:bottom-24
+
+          /* DESKTOP */
           md:right-7
           md:bottom-7
+
           z-[9998]
           flex
           h-14
